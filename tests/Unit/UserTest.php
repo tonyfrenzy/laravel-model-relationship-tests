@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Comment;
 use App\Phone;
 use App\Post;
+use App\Role;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -54,5 +55,14 @@ class UserTest extends TestCase
         $comment = factory(Comment::class)->create(['post_id' => $post->id]);
         
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->comments);
+    }
+
+    /** @test  */
+    public function a_user_belongs_to_many_roles()
+    {
+        $user = factory(User::class)->create(); 
+        $role = factory(Role::class)->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->roles); 
     }
 }
