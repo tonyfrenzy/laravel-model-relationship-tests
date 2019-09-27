@@ -28,6 +28,10 @@ class UserTest extends TestCase
         $user = factory(User::class)->create(); 
         $phone = factory(Phone::class)->create(['user_id' => $user->id]); 
 
+        // Method 1:
         $this->assertInstanceOf(Phone::class, $user->phone); 
+
+        // Method 2:
+        $this->assertEquals(1, $user->phone->count());
     }
 }
