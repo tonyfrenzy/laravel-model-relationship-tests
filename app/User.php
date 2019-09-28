@@ -72,4 +72,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(History::class);
     }
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Comment;
+use App\Country;
 use App\Phone;
 use App\Post;
 use App\Role;
@@ -21,6 +22,7 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
+        $this->country = factory(Country::class)->create();
         $this->supplier = factory(Supplier::class)->create();
         $this->user = factory(User::class)->create();
         $this->phone = factory(Phone::class)->create(['user_id' => $this->user->id]); 
@@ -34,7 +36,7 @@ class UserTest extends TestCase
     {
         $this->assertTrue( 
           Schema::hasColumns('users', [
-            'id','name', 'email', 'email_verified_at', 'password', 'supplier_id'
+            'id','name', 'email', 'email_verified_at', 'password', 'supplier_id', 'country_id'
         ]), 1);
     }
 
@@ -64,5 +66,11 @@ class UserTest extends TestCase
     public function a_user_belongs_to_many_roles()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->user->roles); 
+    }
+
+    /** @test  */
+    public function a_user_belongs_to_a_country()
+    {
+        $this->assertInstanceOf(Country::class, $this->user->country); 
     }
 }
