@@ -25,10 +25,14 @@ class PostsTest extends TestCase
         $this->supplier = factory(Supplier::class)->create();
         $this->user = factory(User::class)->create();
         $this->post = factory(Post::class)->create(['user_id' => $this->user->id]);
-        $this->comment = factory(Comment::class)->create(['post_id' => $this->post->id]);
+        // $this->comment = factory(Comment::class)->create(['post_id' => $this->post->id]);
         $this->image = factory(Image::class)->create([
           "imageable_id" => $this->post->id,
           "imageable_type" => "App\Post",
+        ]);
+        $this->comment = factory(Comment::class)->create([
+          "commentable_id" => $this->post->id,
+          "commentable_type" => "App\Post",
         ]);
     } 
 
@@ -64,5 +68,11 @@ class PostsTest extends TestCase
     public function a_post_morphs_one_image()
     {
         $this->assertInstanceOf(Image::class, $this->post->image); 
+    }
+
+    /** @test  */
+    public function a_post_morphs_many_comments()
+    {
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->post->comments); 
     }
 }

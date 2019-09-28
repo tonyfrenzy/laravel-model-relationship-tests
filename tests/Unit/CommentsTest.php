@@ -7,6 +7,7 @@ use App\Country;
 use App\Post;
 use App\Supplier;
 use App\User;
+use App\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
@@ -23,8 +24,9 @@ class CommentsTest extends TestCase
         $this->country = factory(Country::class)->create();
         $this->supplier = factory(Supplier::class)->create();
         $this->user = factory(User::class)->create();
-        $this->post = factory(Post::class)->create(['user_id' => $this->user->id]);
-        $this->comment = factory(Comment::class)->create(['post_id' => $this->post->id]);
+        $this->post = factory(Post::class)->create();
+        $this->video = factory(Video::class)->create();
+        $this->comment = factory(Comment::class)->create();
     } 
 
     /** @test  */
@@ -50,5 +52,27 @@ class CommentsTest extends TestCase
     public function a_comment_belongs_to_a_user()
     {
         $this->assertInstanceOf(User::class, $this->comment->user);
+    }
+
+    /** @test */
+    public function a_comment_can_be_morphed_to_a_video_model()
+    {
+        $comment = factory(Comment::class)->create([
+          "commentable_id" => $this->video->id,
+          "commentable_type" => "App\Video",
+        ]); 
+
+        $this->assertInstanceOf(Video::class, $comment->commentable);
+    }
+
+    /** @test */
+    public function a_comment_can_be_morphed_to_a_post_model()
+    {
+        $comment = factory(Comment::class)->create([
+          "commentable_id" => $this->post->id,
+          "commentable_type" => "App\Post",
+        ]); 
+
+        $this->assertInstanceOf(Post::class, $comment->commentable);
     }
 }

@@ -84,4 +84,9 @@ class User extends Authenticatable
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

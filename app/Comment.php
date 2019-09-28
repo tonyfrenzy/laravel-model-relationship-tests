@@ -19,4 +19,12 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class);
     }
+    
+    /**
+     * Get the owning commentable model.
+     */
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 }
