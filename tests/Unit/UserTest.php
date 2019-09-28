@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Comment;
 use App\Country;
+use App\Image;
 use App\Phone;
 use App\Post;
 use App\Role;
@@ -29,6 +30,10 @@ class UserTest extends TestCase
         $this->post = factory(Post::class)->create(['user_id' => $this->user->id]);
         $this->comment = factory(Comment::class)->create(['post_id' => $this->post->id]);
         $this->role = factory(Role::class)->create();
+        $this->image = factory(Image::class)->create([
+          "imageable_id" => $this->user->id,
+          "imageable_type" => "App\User",
+        ]);
     } 
 
     /** @test  */
@@ -72,5 +77,11 @@ class UserTest extends TestCase
     public function a_user_belongs_to_a_country()
     {
         $this->assertInstanceOf(Country::class, $this->user->country); 
+    }
+
+    /** @test  */
+    public function a_user_morphs_one_image()
+    {
+        $this->assertInstanceOf(Image::class, $this->user->image); 
     }
 }
