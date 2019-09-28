@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Country;
 use App\Phone;
 use App\Supplier;
 use App\User;
@@ -18,6 +19,7 @@ class PhonesTest extends TestCase
     {
         parent::setUp();
 
+        $this->country = factory(Country::class)->create();
         $this->supplier = factory(Supplier::class)->create();
         $this->user = factory(User::class)->create();
         $this->phone = factory(Phone::class)->create(['user_id' => $this->user->id]); 

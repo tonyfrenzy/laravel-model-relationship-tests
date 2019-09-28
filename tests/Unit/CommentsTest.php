@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Comment;
+use App\Country;
 use App\Post;
 use App\Supplier;
 use App\User;
@@ -19,6 +20,7 @@ class CommentsTest extends TestCase
     {
         parent::setUp();
 
+        $this->country = factory(Country::class)->create();
         $this->supplier = factory(Supplier::class)->create();
         $this->user = factory(User::class)->create();
         $this->post = factory(Post::class)->create(['user_id' => $this->user->id]);
