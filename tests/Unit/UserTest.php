@@ -6,6 +6,7 @@ use App\Comment;
 use App\Phone;
 use App\Post;
 use App\Role;
+use App\Supplier;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,53 +17,52 @@ class UserTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    public function setUp() :void
+    {
+        parent::setUp();
+
+        $this->supplier = factory(Supplier::class)->create();
+        $this->user = factory(User::class)->create();
+        $this->phone = factory(Phone::class)->create(['user_id' => $this->user->id]); 
+        $this->post = factory(Post::class)->create(['user_id' => $this->user->id]);
+        $this->comment = factory(Comment::class)->create(['post_id' => $this->post->id]);
+        $this->role = factory(Role::class)->create();
+    } 
+
     /** @test  */
     public function users_database_has_expected_columns()
     {
         $this->assertTrue( 
           Schema::hasColumns('users', [
-            'id','name', 'email', 'email_verified_at', 'password'
+            'id','name', 'email', 'email_verified_at', 'password', 'supplier_id'
         ]), 1);
     }
 
     /** @test */
     public function a_user_has_a_phone()
     {
-        $user = factory(User::class)->create(); 
-        $phone = factory(Phone::class)->create(['user_id' => $user->id]); 
-
         // Method 1:
-        $this->assertInstanceOf(Phone::class, $user->phone); 
+        $this->assertInstanceOf(Phone::class, $this->user->phone); 
 
         // Method 2:
-        $this->assertEquals(1, $user->phone->count());
+        $this->assertEquals(1, $this->user->phone->count());
     }
 
     /** @test */
     public function a_user_has_many_posts()
     {
-        $user = factory(User::class)->create(); 
-        $post = factory(Post::class)->create(['user_id' => $user->id]);
-
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->posts);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->user->posts);
     }
 
     /** @test */
     public function a_user_has_many_comments()
-    {
-        $user = factory(User::class)->create(); 
-        $post = factory(Post::class)->create(['user_id' => $user->id]);
-        $comment = factory(Comment::class)->create(['post_id' => $post->id]);
-        
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->comments);
+    {        
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->user->comments);
     }
 
     /** @test  */
     public function a_user_belongs_to_many_roles()
     {
-        $user = factory(User::class)->create(); 
-        $role = factory(Role::class)->create();
-
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->roles); 
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->user->roles); 
     }
 }
