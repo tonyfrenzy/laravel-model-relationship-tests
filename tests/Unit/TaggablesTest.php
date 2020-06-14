@@ -40,16 +40,4 @@ class TaggablesTest extends TestCase
             'id', 'tag_id', 'taggable_id', 'taggable_type'
           ]), 1);
     }
-
-    /** @test  */
-    public function a_taggable_morphs_to_many_videos()
-    {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->video->tags); 
-    }
-
-    /** @test  */
-    public function a_taggable_morphs_to_many_posts()
-    {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->post->tags); 
-    }
 }

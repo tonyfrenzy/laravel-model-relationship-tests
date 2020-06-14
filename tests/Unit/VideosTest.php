@@ -58,7 +58,7 @@ class VideosTest extends TestCase
     }
 
     /** @test  */
-    public function a_video_morphs_many_tags()
+    public function a_video_can_be_associated_with_or_morph_to_many_tags()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->video->tags); 
     }

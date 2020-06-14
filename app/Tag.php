@@ -11,7 +11,7 @@ class Tag extends Model
     ];
 
     /**
-     * Get all of the posts that are assigned this tag.
+     * Get all of the posts that are associated with this tag.
      */
     public function posts()
     {
@@ -19,7 +19,7 @@ class Tag extends Model
     }
 
     /**
-     * Get all of the videos that are assigned this tag.
+     * Get all of the videos that are associated with this tag.
      */
     public function videos()
     {
