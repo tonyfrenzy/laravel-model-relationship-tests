@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Taggable extends Model
 {
     protected $fillable = [
-        'name', 'description'
+        'tag_id', 'taggable_id', 'taggable_type'
     ];
 
     /**

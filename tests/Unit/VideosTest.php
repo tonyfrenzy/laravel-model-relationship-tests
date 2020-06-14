@@ -56,4 +56,10 @@ class VideosTest extends TestCase
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->video->comments); 
     }
+
+    /** @test  */
+    public function a_video_morphs_many_tags()
+    {
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->video->tags); 
+    }
 }

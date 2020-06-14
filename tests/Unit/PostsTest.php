@@ -75,4 +75,10 @@ class PostsTest extends TestCase
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->post->comments); 
     }
+
+    /** @test  */
+    public function a_post_morphs_many_tags()
+    {
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->post->tags); 
+    }
 }
